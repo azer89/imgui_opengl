@@ -44,7 +44,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>D:\Code\imgui_opengl\glfw-3.1.2.bin\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Code\imgui_opengl\glfw-3.1.2.bin\include;D:\Code\imgui_opengl\gl3w</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -70,6 +70,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\gl3w\GL\gl3w.h" />
+    <ClInclude Include="..\gl3w\GL\glcorearb.h" />
     <ClInclude Include="imconfig.h" />
     <ClInclude Include="imgui.h" />
     <ClInclude Include="imgui_internal.h" />
@@ -78,6 +80,7 @@
     <ClInclude Include="stb_truetype.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\gl3w\GL\gl3w.c" />
     <ClCompile Include="imgui.cpp" />
     <ClCompile Include="imgui_demo.cpp" />
     <ClCompile Include="imgui_draw.cpp" />

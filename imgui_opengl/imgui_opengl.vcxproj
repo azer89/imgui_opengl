@@ -10,6 +10,13 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="imgui_impl_glfw_gl3.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="imgui_impl_glfw_gl3.cpp" />
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{AF810379-D164-4AD2-8F27-25D544D5B9C9}</ProjectGuid>
     <RootNamespace>imgui_opengl</RootNamespace>
@@ -44,7 +51,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>D:\Code\imgui_opengl\imgui;D:\Code\imgui_opengl\glfw-3.1.2.bin\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Code\imgui_opengl\imgui;D:\Code\imgui_opengl\glfw-3.1.2.bin\include;D:\Code\imgui_opengl\gl3w</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -67,13 +74,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="imgui_impl_glfw.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="imgui_impl_glfw.cpp" />
-    <ClCompile Include="main.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -1,9 +1,10 @@
-// ImGui - standalone example application for Glfw + OpenGL 2, using fixed pipeline
+// ImGui - standalone example application for Glfw + OpenGL 3, using programmable pipeline
 // If you are new to ImGui, see examples/README.txt and documentation at the top of imgui.cpp.
 
 #include <imgui.h>
-#include "imgui_impl_glfw.h"
+#include "imgui_impl_glfw_gl3.h"
 #include <stdio.h>
+#include <GL/gl3w.h>
 #include <GLFW/glfw3.h>
 
 static void error_callback(int error, const char* description)
@@ -17,11 +18,18 @@ int main(int, char**)
     glfwSetErrorCallback(error_callback);
     if (!glfwInit())
         return 1;
-    GLFWwindow* window = glfwCreateWindow(1280, 720, "ImGui OpenGL2 example", NULL, NULL);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+#if __APPLE__
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+#endif
+    GLFWwindow* window = glfwCreateWindow(1280, 720, "ImGui OpenGL3 example", NULL, NULL);
     glfwMakeContextCurrent(window);
+    gl3wInit();
 
     // Setup ImGui binding
-    ImGui_ImplGlfw_Init(window, true);
+    ImGui_ImplGlfwGL3_Init(window, true);
 
     // Load Fonts
     // (there is a default font, this is only if you want to change it. see extra_fonts/README.txt for more details)
@@ -41,7 +49,7 @@ int main(int, char**)
     while (!glfwWindowShouldClose(window))
     {
         glfwPollEvents();
-        ImGui_ImplGlfw_NewFrame();
+        ImGui_ImplGlfwGL3_NewFrame();
 
         // 1. Show a simple window
         // Tip: if we don't call ImGui::Begin()/ImGui::End() the widgets appears in a window automatically called "Debug"
@@ -82,7 +90,7 @@ int main(int, char**)
     }
 
     // Cleanup
-    ImGui_ImplGlfw_Shutdown();
+    ImGui_ImplGlfwGL3_Shutdown();
     glfwTerminate();
 
     return 0;
