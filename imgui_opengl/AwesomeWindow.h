@@ -15,8 +15,19 @@ public:
 	AwesomeWindow();
 	~AwesomeWindow();
 
-	void Init();
-	void Show();
+	void InitializeGL();
+	
+	void ShowWindow();
+
+private:
+
+	static void error_callback(int error, const char* description);
+	static void cursor_enters_window_callBack(GLFWwindow *window, int entered);
+	static void mouse_move_callBack(GLFWwindow *window, double xPos, double yPos);
+	static void mouse_button_callBack(GLFWwindow * window, int button, int actions, int mods);
+	static void mouse_scroll_callBack(GLFWwindow * window, double xOffSet, double yOffSet);
+	static void window_resize_callBack(GLFWwindow * window, int width, int height);
+	static void key_input_callBack(GLFWwindow* window, int key, int scancode, int action, int mods);
 
 private:
 	GLFWwindow* _window;

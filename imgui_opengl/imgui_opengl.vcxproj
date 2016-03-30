@@ -52,7 +52,7 @@
   <PropertyGroup />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level1</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>D:\Code\imgui_opengl\imgui;D:\Code\imgui_opengl\glfw-3.1.2.bin\include;D:\Code\imgui_opengl\gl3w</AdditionalIncludeDirectories>

@@ -2,10 +2,7 @@
 #include "AwesomeWindow.h"
 #include <iostream>
 
-static void error_callback(int error, const char* description)
-{
-	fprintf(stderr, "Error %d: %s\n", error, description);
-}
+
 
 AwesomeWindow::AwesomeWindow() : _window(0)
 {
@@ -16,13 +13,76 @@ AwesomeWindow::~AwesomeWindow()
 	//if (_window) { delete _window; }
 }
 
-void AwesomeWindow::Init()
+void AwesomeWindow::InitializeGL()
 {
+	/* Stuff I forget what their purposes are */
+	//glShadeModel(GL_SMOOTH); // error ?
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glClearColor(1.0, 1.0, 1.0, 1.0);
+	glEnable(GL_DEPTH_TEST);
 
+	ImVec4 clear_color = ImColor(114, 144, 154);
+	glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
 }
 
-void AwesomeWindow::Show()
+void AwesomeWindow::ShowWindow()
 {
+	glfwSetErrorCallback(error_callback);	
+	if (!glfwInit()) { std::cout << "cannot init glfw\n"; return; }
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	_window = glfwCreateWindow(1280, 720, "Awesome Window", NULL, NULL);
+	glfwMakeContextCurrent(_window);
+	gl3wInit();
+
+	// Register callbacks
+
+	ImGui_ImplGlfwGL3_Init(_window, true);
+
+	try 
+	{
+
+		// init your OpenGL
+		this->InitializeGL();
+
+		while (!glfwWindowShouldClose(_window))
+		{
+			glfwPollEvents();
+			ImGui_ImplGlfwGL3_NewFrame();
+
+			// App Logic
+
+			// GUI Logic
+
+			// Rendering
+			int display_w, display_h;
+			glfwGetFramebufferSize(_window, &display_w, &display_h);
+			glViewport(0, 0, display_w, display_h);
+			
+			// draw your shit
+
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			ImGui::Render();
+			glfwSwapBuffers(_window);
+		}
+
+	}
+	catch (const  std::exception & e) 
+	{
+		std::cerr << "Exception Thrown: ";
+		std::cerr << e.what() << std::endl;
+	}
+	catch (...) 
+	{
+		std::cerr << "Uncaught exception thrown!  Terminating Program." << std::endl;
+	}
+
+	// Cleanup
+	ImGui_ImplGlfwGL3_Shutdown();
+	glfwTerminate();
+
 	/*
 	// Setup window
 	glfwSetErrorCallback(error_callback);
@@ -108,4 +168,33 @@ void AwesomeWindow::Show()
 	ImGui_ImplGlfwGL3_Shutdown();
 	glfwTerminate();
 	*/
+}
+
+void AwesomeWindow::error_callback(int error, const char* description)
+{
+	fprintf(stderr, "Error %d: %s\n", error, description);
+}
+
+void AwesomeWindow::cursor_enters_window_callBack(GLFWwindow *window, int entered)
+{
+}
+
+void AwesomeWindow::mouse_move_callBack(GLFWwindow *window, double xPos, double yPos)
+{
+}
+
+void AwesomeWindow::mouse_button_callBack(GLFWwindow * window, int button, int actions, int mods)
+{
+}
+
+void AwesomeWindow::mouse_scroll_callBack(GLFWwindow * window, double xOffSet, double yOffSet)
+{
+}
+
+void AwesomeWindow::window_resize_callBack(GLFWwindow * window, int width, int height)
+{
+}
+
+void AwesomeWindow::key_input_callBack(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
 }

@@ -22,7 +22,7 @@ int main(int, char**)
 {
 	AwesomeWindow* window = new AwesomeWindow();
 
-	window->Show();
+	window->ShowWindow();
 
 	delete window;
 
