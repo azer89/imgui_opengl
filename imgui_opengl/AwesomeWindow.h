@@ -15,6 +15,7 @@ public:
 	AwesomeWindow();
 	~AwesomeWindow();
 
+	void Init();
 	void Show();
 
 private:

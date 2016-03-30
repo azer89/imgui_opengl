@@ -16,8 +16,14 @@ AwesomeWindow::~AwesomeWindow()
 	//if (_window) { delete _window; }
 }
 
+void AwesomeWindow::Init()
+{
+
+}
+
 void AwesomeWindow::Show()
 {
+	/*
 	// Setup window
 	glfwSetErrorCallback(error_callback);
 
@@ -51,7 +57,7 @@ void AwesomeWindow::Show()
 	//io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf", 18.0f, NULL, io.Fonts->GetGlyphRangesJapanese());
 
 	bool show_test_window = true;
-	bool show_another_window = false;
+	bool show_another_window = true;
 	ImVec4 clear_color = ImColor(114, 144, 154);
 
 	// Main loop
@@ -101,4 +107,5 @@ void AwesomeWindow::Show()
 	// Cleanup
 	ImGui_ImplGlfwGL3_Shutdown();
 	glfwTerminate();
+	*/
 }
