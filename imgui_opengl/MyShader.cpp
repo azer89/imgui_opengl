@@ -1,4 +1,11 @@
 
+/**
+* This code is heavily inspired by the skeleton code given in CS488 Winter 2016 at U Waterloo
+*
+* Reza Adhitya Saputra
+* reza.adhitya.saputra@gmail.com
+*/
+
 #include "MyShader.h"
 
 #include <fstream> // for reading text files

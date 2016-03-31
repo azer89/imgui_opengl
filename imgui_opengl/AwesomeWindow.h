@@ -3,6 +3,13 @@
 #ifndef AWESOME_WINDOW_H
 #define AWESOME_WINDOW_H
 
+/**
+* This code is heavily inspired by the skeleton code given in CS488 Winter 2016 at U Waterloo
+*
+* Reza Adhitya Saputra
+* reza.adhitya.saputra@gmail.com
+*/
+
 #include <imgui.h>
 #include "imgui_impl_glfw_gl3.h"
 #include <stdio.h>
@@ -20,6 +27,12 @@ public:
 	void ShowWindow();
 
 private:
+	bool cursorEnterWindowEvent(int entered);
+	bool mouseMoveEvent(double xPos, double yPos);
+	bool mouseButtonInputEvent(int button, int actions, int mods);
+	bool mouseScrollEvent(double xOffSet, double yOffSet);
+	bool windowResizeEvent(int width, int height);
+	bool keyInputEvent(int key, int action, int mods);
 
 	static void error_callback(int error, const char* description);
 	static void cursor_enters_window_callBack(GLFWwindow *window, int entered);
