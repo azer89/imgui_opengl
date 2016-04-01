@@ -37,6 +37,9 @@ public:
 	static std::shared_ptr<AwesomeWindow> GetInstance();
 
 private:
+	void BuildStuff();
+
+private:
 	void cursorEnterWindowEvent(int entered);
 	void mouseMoveEvent(double xPos, double yPos);
 	void mouseButtonInputEvent(int button, int actions, int mods);
@@ -64,6 +67,12 @@ private:
 	MyShader* _myShader;
 	GLuint _vbo;
 	GLuint _vao;
+
+	// Locations
+	GLuint _mvpMatrixLocation;
+	GLuint _colorLocation;
+	GLuint _vertexLocation;
+	GLuint _use_color_location;
 
 };
 

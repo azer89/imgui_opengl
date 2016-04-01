@@ -57,6 +57,66 @@ void MyShader::Initialize(std::string vs_path, std::string fs_path)
 
 }
 
+void MyShader::Link()
+{
+	glAttachShader(this->_programID, this->_vertexShader._shaderID);
+	glAttachShader(this->_programID, this->_fragmentShader._shaderID);
+	glLinkProgram(this->_programID);
+
+	// check
+	GLint linkStatus;
+	glGetProgramiv(this->_programID, GL_LINK_STATUS, &linkStatus);
+	if (linkStatus == GL_FALSE)
+	{
+		GLint errorMessageLength;
+		// Get the length in chars of the link error message.
+		glGetProgramiv(this->_programID, GL_INFO_LOG_LENGTH, &errorMessageLength);
+
+		// Retrieve the link error message.
+		GLchar* errorMessage = new GLchar[errorMessageLength];
+		glGetProgramInfoLog(this->_programID, errorMessageLength, NULL, errorMessage);
+
+		std::cout << "Linking shader error: " << errorMessage << "\n";
+		//std::stringstream strStream;
+		//strStream << "Error Linking Shaders: " << errorMessage << endl;
+
+		delete[] errorMessage;
+		//throw ShaderException(strStream.str());
+	}
+	else
+	{
+		std::cout << "Linking shader OK\n";
+	}
+}
+
+GLint MyShader::getUniformLocation(const char * uniformName) const
+{
+	GLint result = glGetUniformLocation(this->_programID, (const GLchar *)uniformName);
+	if (result == -1) 
+	{		
+		std::cout << "Error obtaining uniform location: " << uniformName << "\n";
+	}
+	else
+	{
+		std::cout << "[uniform] " << uniformName << ": " << result << "\n";
+	}
+	return result;
+}
+
+GLint MyShader::getAttribLocation(const char * attributeName) const
+{
+	GLint result = glGetAttribLocation(this->_programID, (const GLchar *)attributeName);
+	if (result == -1) 
+	{
+		std::cout << "Error obtaining attribute location: " << attributeName << "\n";
+	}
+	else
+	{
+		std::cout << "[attribute] " << attributeName << ": " << result << "\n";
+	}
+	return result;
+}
+
 void MyShader::CheckCompilation(GLuint id)
 {
 	GLint flag;

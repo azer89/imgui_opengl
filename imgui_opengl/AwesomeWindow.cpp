@@ -2,6 +2,13 @@
 #include "AwesomeWindow.h"
 #include <iostream>
 
+#include <imgui.h>
+/*
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+#include <glm/gtx/io.hpp>
+*/
 #include "MyShader.h"
 
 /**
@@ -48,6 +55,16 @@ void AwesomeWindow::InitializeGL()
 	// shader-related
 	_myShader = new MyShader();
 	_myShader->Initialize("D:\\Code\\imgui_opengl\\imgui_opengl\\shader.vert", "D:\\Code\\imgui_opengl\\imgui_opengl\\shader.frag");
+	_myShader->Link();
+	_mvpMatrixLocation  = _myShader->getUniformLocation("mvpMatrix");
+	_use_color_location = _myShader->getUniformLocation("use_color");
+	_colorLocation      = _myShader->getAttribLocation("vertexColor");
+	_vertexLocation     = _myShader->getAttribLocation("vert");	
+}
+
+void AwesomeWindow::BuildStuff()
+{
+
 }
 
 void AwesomeWindow::ShowWindow()

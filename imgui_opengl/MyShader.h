@@ -40,6 +40,10 @@ public:
 	~MyShader();
 
 	void Initialize(std::string vs_path, std::string fs_path);
+	void Link();
+
+	GLint getUniformLocation(const char * uniformName) const;
+	GLint getAttribLocation(const char * attributeName) const;
 
 private:
 	
