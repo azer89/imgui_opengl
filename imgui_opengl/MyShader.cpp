@@ -70,6 +70,10 @@ void MyShader::CheckCompilation(GLuint id)
 		std::cout << "Shader error: " << msg << "\n";
 		delete[] msg;
 	}
+	else
+	{
+		std::cout << "Shader OK\n";
+	}
 }
 
 std::string MyShader::ReadTextFile(std::string file_path)
@@ -79,6 +83,7 @@ std::string MyShader::ReadTextFile(std::string file_path)
 	std::ifstream file;
 	file.open(file_path.c_str());
 	if (!file) { std::cout << "cannot find " << file_path << "\n"; }
+	else { std::cout << file_path << " is found\n"; }
 
 	std::stringstream sStream;	
 	while (file.good())
@@ -91,6 +96,10 @@ std::string MyShader::ReadTextFile(std::string file_path)
 	sStream << '\0';
 
 	shader_code = sStream.str();
+
+	//std::cout << "=========================\n";
+	//std::cout << shader_code << "\n";
+	//std::cout << "=========================\n";
 
 	return shader_code;
 }

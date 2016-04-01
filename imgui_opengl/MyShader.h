@@ -39,8 +39,10 @@ public:
 	MyShader();
 	~MyShader();
 
-private:
 	void Initialize(std::string vs_path, std::string fs_path);
+
+private:
+	
 	std::string ReadTextFile(std::string file_path);
 	void CheckCompilation(GLuint id);
 };

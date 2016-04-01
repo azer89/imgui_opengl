@@ -20,11 +20,12 @@ static void error_callback(int error, const char* description)
 
 int main(int, char**)
 {
-	AwesomeWindow* window = new AwesomeWindow();
+	//AwesomeWindow* window = new AwesomeWindow();
+	//window->ShowWindow();
+	//delete window;
 
-	window->ShowWindow();
+	AwesomeWindow::GetInstance()->ShowWindow();
 
-	delete window;
 
     return 0;
 }

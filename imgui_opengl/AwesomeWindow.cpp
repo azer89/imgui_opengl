@@ -2,6 +2,8 @@
 #include "AwesomeWindow.h"
 #include <iostream>
 
+#include "MyShader.h"
+
 /**
  * This code is heavily inspired by the skeleton code given in CS488 Winter 2016 at U Waterloo
  *
@@ -9,19 +11,30 @@
  * reza.adhitya.saputra@gmail.com
  */
 
+std::shared_ptr<AwesomeWindow> AwesomeWindow::_static_instance = nullptr;
 
 
-AwesomeWindow::AwesomeWindow() : _window(0)
+AwesomeWindow::AwesomeWindow() : _myShader(0)
 {
 }
 
 AwesomeWindow::~AwesomeWindow()
 {
 	//if (_window) { delete _window; }
+	if (_myShader) { delete _myShader; }
+}
+
+std::shared_ptr<AwesomeWindow> AwesomeWindow::GetInstance()
+{
+	if (_static_instance == nullptr)
+		{ _static_instance = std::shared_ptr<AwesomeWindow>(new AwesomeWindow()); }
+	return _static_instance;
 }
 
 void AwesomeWindow::InitializeGL()
 {
+	std::cout << "InitializeGL\n";
+
 	/* Stuff I forget what their purposes are */
 	//glShadeModel(GL_SMOOTH); // error ?
 	glEnable(GL_BLEND);
@@ -31,10 +44,15 @@ void AwesomeWindow::InitializeGL()
 
 	ImVec4 clear_color = ImColor(114, 144, 154);
 	glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
+
+	// shader-related
+	_myShader = new MyShader();
+	_myShader->Initialize("D:\\Code\\imgui_opengl\\imgui_opengl\\shader.vert", "D:\\Code\\imgui_opengl\\imgui_opengl\\shader.frag");
 }
 
 void AwesomeWindow::ShowWindow()
 {
+	// prepare stuff
 	glfwSetErrorCallback(error_callback);	
 	if (!glfwInit()) { std::cout << "cannot init glfw\n"; return; }
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -45,8 +63,14 @@ void AwesomeWindow::ShowWindow()
 	gl3wInit();
 
 	// Register callbacks
+	glfwSetKeyCallback(        _window, key_input_callBack);
+	glfwSetWindowSizeCallback( _window, window_resize_callBack);
+	glfwSetScrollCallback(     _window, mouse_scroll_callBack);
+	glfwSetMouseButtonCallback(_window, mouse_button_callBack);
+	glfwSetCursorPosCallback(  _window, mouse_move_callBack);
+	glfwSetCursorEnterCallback(_window, cursor_enters_window_callBack);
 
-	ImGui_ImplGlfwGL3_Init(_window, true);
+	ImGui_ImplGlfwGL3_Init(_window, false);
 
 	try 
 	{
@@ -184,24 +208,61 @@ void AwesomeWindow::error_callback(int error, const char* description)
 
 void AwesomeWindow::cursor_enters_window_callBack(GLFWwindow *window, int entered)
 {
+	GetInstance()->cursorEnterWindowEvent(entered);
 }
 
 void AwesomeWindow::mouse_move_callBack(GLFWwindow *window, double xPos, double yPos)
 {
+	GetInstance()->mouseMoveEvent(xPos, yPos);
 }
 
 void AwesomeWindow::mouse_button_callBack(GLFWwindow * window, int button, int actions, int mods)
 {
+	GetInstance()->mouseButtonInputEvent(button, actions, mods);
 }
 
 void AwesomeWindow::mouse_scroll_callBack(GLFWwindow * window, double xOffSet, double yOffSet)
 {
+	GetInstance()->mouseScrollEvent(xOffSet, yOffSet);
 }
 
 void AwesomeWindow::window_resize_callBack(GLFWwindow * window, int width, int height)
 {
+	GetInstance()->windowResizeEvent(width, height);
 }
 
 void AwesomeWindow::key_input_callBack(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
+	GetInstance()->keyInputEvent(key, action, mods);
 }
+
+void AwesomeWindow::cursorEnterWindowEvent(int entered)
+{
+	//std::cout << "cursorEnterWindowEvent\n";
+}
+
+void AwesomeWindow::mouseMoveEvent(double xPos, double yPos)
+{
+	//std::cout << "mouseMoveEvent\n";
+}
+
+void AwesomeWindow::mouseButtonInputEvent(int button, int actions, int mods)
+{
+	//std::cout << "mouseButtonInputEvent\n";
+}
+
+void AwesomeWindow::mouseScrollEvent(double xOffSet, double yOffSet)
+{
+	//std::cout << "mouseScrollEvent\n";
+}
+
+void AwesomeWindow::windowResizeEvent(int width, int height)
+{
+	//std::cout << "windowResizeEvent\n";
+}
+
+void AwesomeWindow::keyInputEvent(int key, int action, int mods)
+{
+	//std::cout << "keyInputEvent\n";
+}
+
