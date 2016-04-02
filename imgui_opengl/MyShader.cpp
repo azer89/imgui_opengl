@@ -19,19 +19,13 @@ MyShader::MyShader() : _programID(0)
 MyShader::~MyShader()
 {
 	if (this->_vertexShader._shaderID != 0)
-	{
-		glDeleteShader(this->_vertexShader._shaderID);
-	}
+		{ glDeleteShader(this->_vertexShader._shaderID); }
 
 	if (this->_fragmentShader._shaderID != 0)
-	{
-		glDeleteShader(this->_fragmentShader._shaderID);
-	}
+		{ glDeleteShader(this->_fragmentShader._shaderID); }
 
 	if (this->_programID != 0)
-	{
-		glDeleteProgram(this->_programID);
-	}
+		{ glDeleteProgram(this->_programID); }
 }
 
 void MyShader::Initialize(std::string vs_path, std::string fs_path)
@@ -93,13 +87,9 @@ GLint MyShader::getUniformLocation(const char * uniformName) const
 {
 	GLint result = glGetUniformLocation(this->_programID, (const GLchar *)uniformName);
 	if (result == -1) 
-	{		
-		std::cout << "Error obtaining uniform location: " << uniformName << "\n";
-	}
+		{ std::cout << "Error obtaining uniform location: " << uniformName << "\n"; }
 	else
-	{
-		std::cout << "[uniform] " << uniformName << ": " << result << "\n";
-	}
+		{ std::cout << "[uniform] " << uniformName << ": " << result << "\n"; }
 	return result;
 }
 
@@ -107,13 +97,9 @@ GLint MyShader::getAttribLocation(const char * attributeName) const
 {
 	GLint result = glGetAttribLocation(this->_programID, (const GLchar *)attributeName);
 	if (result == -1) 
-	{
-		std::cout << "Error obtaining attribute location: " << attributeName << "\n";
-	}
+		{ std::cout << "Error obtaining attribute location: " << attributeName << "\n"; }
 	else
-	{
-		std::cout << "[attribute] " << attributeName << ": " << result << "\n";
-	}
+		{ std::cout << "[attribute] " << attributeName << ": " << result << "\n"; }
 	return result;
 }
 
