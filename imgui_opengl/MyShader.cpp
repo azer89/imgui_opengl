@@ -86,20 +86,16 @@ void MyShader::Link()
 GLint MyShader::getUniformLocation(const char * uniformName) const
 {
 	GLint result = glGetUniformLocation(this->_programID, (const GLchar *)uniformName);
-	if (result == -1) 
-		{ std::cout << "Error obtaining uniform location: " << uniformName << "\n"; }
-	else
-		{ std::cout << "[uniform] " << uniformName << ": " << result << "\n"; }
+	if (result == -1) { std::cout << "Error obtaining uniform location: " << uniformName << "\n"; }
+	else { std::cout << "[uniform] " << uniformName << ": " << result << "\n"; }
 	return result;
 }
 
 GLint MyShader::getAttribLocation(const char * attributeName) const
 {
 	GLint result = glGetAttribLocation(this->_programID, (const GLchar *)attributeName);
-	if (result == -1) 
-		{ std::cout << "Error obtaining attribute location: " << attributeName << "\n"; }
-	else
-		{ std::cout << "[attribute] " << attributeName << ": " << result << "\n"; }
+	if (result == -1)  { std::cout << "Error obtaining attribute location: " << attributeName << "\n"; }
+	else { std::cout << "[attribute] " << attributeName << ": " << result << "\n"; }
 	return result;
 }
 

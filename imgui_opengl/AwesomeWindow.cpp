@@ -3,12 +3,14 @@
 #include <iostream>
 
 #include <imgui.h>
+
 /*
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtx/io.hpp>
 */
+
 #include "MyShader.h"
 
 /**
@@ -64,7 +66,74 @@ void AwesomeWindow::InitializeGL()
 
 void AwesomeWindow::BuildStuff()
 {
+	// Vertex positions for triangle vertices.
+	// Default OpenGL coordinates range from -1 to 1 in all directions (x,y,z).
 
+	/*
+	float half_sqrt3 = float(std::sqrt(3.0)) * 0.5f;
+	glm::vec3 triangleVertices[] = {
+		// Construct equalaterial triangle
+		vec3(0.0f, 0.0f, 0.0f),
+		vec3(0.25f, half_sqrt3 * 0.5f, 0.0),
+		vec3(0.5f, 0.0f, 0.0f)
+	};
+
+	// Construct triangle centroid and move vertices so triangle is centered at origin
+	vec3 centroid(0.0f);
+	for (const vec3 & v : triangleVertices) {
+		centroid += v;
+	}
+	centroid /= 3.0f;
+	for (vec3 & v : triangleVertices) {
+		v -= centroid;
+	}
+
+
+	// Generate a vertex buffer object to hold the triangle's vertex data.
+	glGenBuffers(1, &m_vbo_triangle);
+
+	//-- Upload triangle vertex data to the vertex buffer:
+	glBindBuffer(GL_ARRAY_BUFFER, m_vbo_triangle);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(triangleVertices), triangleVertices,
+		GL_STATIC_DRAW);
+
+
+	// Unbind the target GL_ARRAY_BUFFER, now that we are finished using it.
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	CHECK_GL_ERRORS;
+	*/
+
+	//int foo[5] = { 16, 2, 77, 40, 12071 };
+
+	// 36
+	/*
+	float vertexData = numpy.array([0.0, 0.0, 0.0, 1.0,
+		0.0, 250.0, 0.0, 1.0,
+		250.0, 250.0, 0.0, 1.0,
+
+		0.0, 0.0, 0.0, 1.0,
+		250.0, 250.0, 0.0, 1.0,
+		250.0, 0.0, 0.0, 1.0,
+
+		# uv
+		0, 1,
+		0, 0,
+		1, 0,
+
+		0, 1,
+		1, 0,
+		1, 1],
+		dtype = numpy.float32)
+
+		colorData = numpy.array([1.0, 0.0, 0.0, 1.0,
+		0.0, 0.0, 1.0, 1.0,
+		0.0, 1.0, 0.0, 1.0,
+		1.0, 0.0, 0.0, 1.0,
+		0.0, 1.0, 0.0, 1.0,
+		0.0, 0.0, 1.0, 1.0, ],
+		dtype = numpy.float32)
+		*/
 }
 
 void AwesomeWindow::ShowWindow()
