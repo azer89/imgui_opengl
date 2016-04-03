@@ -67,6 +67,7 @@ private:
 	MyShader* _myShader;
 	GLuint _vbo;
 	GLuint _vao;
+	GLuint _colVbo;
 
 	// Locations
 	GLuint _mvpMatrixLocation;

@@ -51,6 +51,16 @@ void MyShader::Initialize(std::string vs_path, std::string fs_path)
 
 }
 
+void MyShader::enable()
+{
+	glUseProgram(this->_programID);
+}
+
+void MyShader::disable()
+{
+	glUseProgram((GLuint)NULL);
+}
+
 void MyShader::Link()
 {
 	glAttachShader(this->_programID, this->_vertexShader._shaderID);

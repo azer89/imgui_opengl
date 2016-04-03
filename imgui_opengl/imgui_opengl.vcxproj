@@ -55,7 +55,7 @@
       <WarningLevel>Level1</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>D:\Code\imgui_opengl\imgui;D:\Code\imgui_opengl\glfw-3.1.2.bin\include;D:\Code\imgui_opengl\gl3w</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Code\imgui_opengl\imgui;D:\Code\imgui_opengl\glfw-3.1.2.bin\include;D:\Code\imgui_opengl\gl3w;D:\Code\imgui_opengl\glm</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>

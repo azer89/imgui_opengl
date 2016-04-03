@@ -4,12 +4,10 @@
 
 #include <imgui.h>
 
-/*
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtx/io.hpp>
-*/
 
 #include "MyShader.h"
 
@@ -66,78 +64,56 @@ void AwesomeWindow::InitializeGL()
 
 void AwesomeWindow::BuildStuff()
 {
-	// Vertex positions for triangle vertices.
-	// Default OpenGL coordinates range from -1 to 1 in all directions (x,y,z).
+	// http://www.opengl-tutorial.org/beginners-tutorials/tutorial-5-a-textured-cube/
 
-	/*
-	float half_sqrt3 = float(std::sqrt(3.0)) * 0.5f;
-	glm::vec3 triangleVertices[] = {
-		// Construct equalaterial triangle
-		vec3(0.0f, 0.0f, 0.0f),
-		vec3(0.25f, half_sqrt3 * 0.5f, 0.0),
-		vec3(0.5f, 0.0f, 0.0f)
+	using namespace glm;
+
+	vec3 vertices[] = {
+		vec3(0.0,     0.0, 0.0),
+		vec3(0.0,   250.0, 0.0),
+		vec3(250.0, 250.0, 0.0),
+		vec3(0.0,     0.0, 0.0),
+		vec3(250.0, 250.0, 0.0),
+		vec3(250.0,   0.0, 0.0)
 	};
 
-	// Construct triangle centroid and move vertices so triangle is centered at origin
-	vec3 centroid(0.0f);
-	for (const vec3 & v : triangleVertices) {
-		centroid += v;
-	}
-	centroid /= 3.0f;
-	for (vec3 & v : triangleVertices) {
-		v -= centroid;
-	}
+	vec3 colors[] =
+	{
+		vec3(1.0, 0.0, 0.0),
+		vec3(0.0, 0.0, 1.0),
+		vec3(0.0, 1.0, 0.0),
+		vec3(1.0, 0.0, 0.0),
+		vec3(0.0, 1.0, 0.0),
+		vec3(0.0, 0.0, 1.0)
+	};
 
+	// create VAO
+	glGenVertexArrays(1, &this->_vao);
+	glBindVertexArray(this->_vao);
 
-	// Generate a vertex buffer object to hold the triangle's vertex data.
-	glGenBuffers(1, &m_vbo_triangle);
+	//  create a VBO for position and uv
+	glGenBuffers(1, &this->_vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, this->_vbo);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	glEnableVertexAttribArray(this->_vertexLocation);
+	glVertexAttribPointer(this->_vertexLocation, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 
-	//-- Upload triangle vertex data to the vertex buffer:
-	glBindBuffer(GL_ARRAY_BUFFER, m_vbo_triangle);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(triangleVertices), triangleVertices,
-		GL_STATIC_DRAW);
+	// create VBO for color
+	glGenBuffers(1, &this->_colVbo);
+	glBindBuffer(GL_ARRAY_BUFFER, this->_colVbo);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(colors), colors, GL_STATIC_DRAW);
+	glEnableVertexAttribArray(this->_colorLocation);
+	glVertexAttribPointer(this->_colorLocation, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 
-
-	// Unbind the target GL_ARRAY_BUFFER, now that we are finished using it.
+	// unbind vao and vbo
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	CHECK_GL_ERRORS;
-	*/
-
-	//int foo[5] = { 16, 2, 77, 40, 12071 };
-
-	// 36
-	/*
-	float vertexData = numpy.array([0.0, 0.0, 0.0, 1.0,
-		0.0, 250.0, 0.0, 1.0,
-		250.0, 250.0, 0.0, 1.0,
-
-		0.0, 0.0, 0.0, 1.0,
-		250.0, 250.0, 0.0, 1.0,
-		250.0, 0.0, 0.0, 1.0,
-
-		# uv
-		0, 1,
-		0, 0,
-		1, 0,
-
-		0, 1,
-		1, 0,
-		1, 1],
-		dtype = numpy.float32)
-
-		colorData = numpy.array([1.0, 0.0, 0.0, 1.0,
-		0.0, 0.0, 1.0, 1.0,
-		0.0, 1.0, 0.0, 1.0,
-		1.0, 0.0, 0.0, 1.0,
-		0.0, 1.0, 0.0, 1.0,
-		0.0, 0.0, 1.0, 1.0, ],
-		dtype = numpy.float32)
-		*/
+	glBindVertexArray(0);
 }
 
 void AwesomeWindow::ShowWindow()
 {
+	using namespace glm;
+
 	// prepare stuff
 	glfwSetErrorCallback(error_callback);	
 	if (!glfwInit()) { std::cout << "cannot init glfw\n"; return; }
@@ -160,9 +136,9 @@ void AwesomeWindow::ShowWindow()
 
 	try 
 	{
-
 		// init your OpenGL
 		this->InitializeGL();
+		this->BuildStuff();
 
 		while (!glfwWindowShouldClose(_window))
 		{
@@ -176,11 +152,25 @@ void AwesomeWindow::ShowWindow()
 			// Rendering
 			int display_w, display_h;
 			glfwGetFramebufferSize(_window, &display_w, &display_h);
-			glViewport(0, 0, display_w, display_h);
-			
-			// draw your shit
 
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			glViewport(0, 0, display_w, display_h);
+
+			this->_myShader->enable();
+			
+			// draw your shit
+			mat4 orthoMatrix = glm::ortho(0.0f, (float)display_w, (float)display_h, 0.0f, -100.f, 100.0f);
+			mat4 transformMatrix;
+			mat4 mpvMatrix = orthoMatrix * transformMatrix;
+			glUniformMatrix4fv(this->_mvpMatrixLocation, 1, GL_FALSE, glm::value_ptr(mpvMatrix));
+			
+			glUniform1f(this->_use_color_location, (GLfloat)1.0);
+			glBindVertexArray(this->_vao);
+			glDrawArrays(GL_TRIANGLES, 0, 6);
+			// unbind
+			glBindVertexArray(0);
+			this->_myShader->disable();
+
 			ImGui::Render();
 			glfwSwapBuffers(_window);
 		}

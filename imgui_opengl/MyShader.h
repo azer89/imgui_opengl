@@ -45,6 +45,9 @@ public:
 	GLint getUniformLocation(const char * uniformName) const;
 	GLint getAttribLocation(const char * attributeName) const;
 
+	void enable();
+	void disable();
+
 private:
 	
 	std::string ReadTextFile(std::string file_path);
