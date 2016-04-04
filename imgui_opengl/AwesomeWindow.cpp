@@ -160,7 +160,10 @@ void AwesomeWindow::ShowWindow()
 			
 			// draw your shit
 			mat4 orthoMatrix = glm::ortho(0.0f, (float)display_w, (float)display_h, 0.0f, -100.f, 100.0f);
-			mat4 transformMatrix;
+			//mat4 transformMatrix;
+			mat4 transformMatrix = glm::scale(
+				glm::mat4(1.0f), // identity matrix, weird parameter, huh?
+				glm::vec3(1.0));
 			mat4 mpvMatrix = orthoMatrix * transformMatrix;
 			glUniformMatrix4fv(this->_mvpMatrixLocation, 1, GL_FALSE, glm::value_ptr(mpvMatrix));
 			
