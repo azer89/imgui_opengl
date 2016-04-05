@@ -24,6 +24,9 @@
     <ClInclude Include="AwesomeWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MyTexture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="imgui_impl_glfw_gl3.cpp">
@@ -36,6 +39,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="AwesomeWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MyTexture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
