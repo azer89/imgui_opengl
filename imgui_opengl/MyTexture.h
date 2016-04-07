@@ -13,7 +13,7 @@ public:
 	MyTexture(const char * file_path);
 	~MyTexture();
 
-private:
+public:
 	GLuint _textureID;
 
 private:

@@ -191,10 +191,12 @@ void AwesomeWindow::ShowWindow()
 			mat4 mpvMatrix = orthoMatrix * transformMatrix;
 			glUniformMatrix4fv(this->_mvpMatrixLocation, 1, GL_FALSE, glm::value_ptr(mpvMatrix));
 			
-			glUniform1f(this->_use_color_location, (GLfloat)1.0);
+			glBindTexture(GL_TEXTURE_2D, this->_texture._textureID);
+			glUniform1f(this->_use_color_location, (GLfloat)0.0);
 			glBindVertexArray(this->_vao);
 			glDrawArrays(GL_TRIANGLES, 0, 6);
 			// unbind
+			glBindTexture(GL_TEXTURE_2D, 0);
 			glBindVertexArray(0);
 			this->_myShader->disable();
 
