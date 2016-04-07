@@ -12,7 +12,11 @@
 
 MyTexture::MyTexture()
 {
+}
 
+MyTexture::MyTexture(const char * file_path)
+{
+	this->_textureID = LoadBMP(file_path);
 }
 
 MyTexture::~MyTexture()
@@ -116,6 +120,8 @@ GLuint MyTexture::LoadBMP(const char * file_path)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glGenerateMipmap(GL_TEXTURE_2D);
+
+	std::cout << "Image " << file_path << " is loaded\n";
 
 	// Return the ID of the texture we just created
 	return textureID;

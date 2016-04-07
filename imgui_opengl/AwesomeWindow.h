@@ -14,6 +14,7 @@
 #include "imgui_impl_glfw_gl3.h"
 #include <GL/gl3w.h>
 #include <GLFW/glfw3.h>
+#include "MyTexture.h"
 
 #include <iostream>
 #include <memory>
@@ -60,6 +61,7 @@ private:
 private:
 	GLFWwindow* _window;
 	
+	
 	// Why do we have a static instance?
 	// Becaus ethe callback functions (mouse events, key press events, and whatnot) are static !!!
 	static std::shared_ptr<AwesomeWindow> _static_instance;
@@ -68,12 +70,15 @@ private:
 	GLuint _vbo;
 	GLuint _vao;
 	GLuint _colVbo;
+	GLuint _uvVbo;
+	MyTexture _texture;
 
 	// Locations
 	GLuint _mvpMatrixLocation;
 	GLuint _colorLocation;
 	GLuint _vertexLocation;
 	GLuint _use_color_location;
+	GLuint _texCoordLocation;
 
 };
 

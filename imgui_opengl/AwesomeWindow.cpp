@@ -56,6 +56,7 @@ void AwesomeWindow::InitializeGL()
 	_myShader = new MyShader();
 	_myShader->Initialize("D:\\Code\\imgui_opengl\\imgui_opengl\\shader.vert", "D:\\Code\\imgui_opengl\\imgui_opengl\\shader.frag");
 	_myShader->Link();
+	_texCoordLocation   = _myShader->getAttribLocation("uv");
 	_mvpMatrixLocation  = _myShader->getUniformLocation("mvpMatrix");
 	_use_color_location = _myShader->getUniformLocation("use_color");
 	_colorLocation      = _myShader->getAttribLocation("vertexColor");
@@ -75,6 +76,16 @@ void AwesomeWindow::BuildStuff()
 		vec3(0.0,     0.0, 0.0),
 		vec3(250.0, 250.0, 0.0),
 		vec3(250.0,   0.0, 0.0)
+	};
+
+	vec2 uv_coords[] =
+	{
+		vec2(0, 1),
+		vec2(0, 0),
+		vec2(1, 0),
+		vec2(0, 1),
+		vec2(1, 0),
+		vec2(1, 1)
 	};
 
 	vec3 colors[] =
@@ -97,6 +108,15 @@ void AwesomeWindow::BuildStuff()
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 	glEnableVertexAttribArray(this->_vertexLocation);
 	glVertexAttribPointer(this->_vertexLocation, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+	std::cout << "vbo ID: " << _vbo << "\n";
+
+	// create VBO for uv
+	glGenBuffers(1, &this->_uvVbo);
+	glBindBuffer(GL_ARRAY_BUFFER, this->_uvVbo);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(uv_coords), uv_coords, GL_STATIC_DRAW);
+	glEnableVertexAttribArray(this->_texCoordLocation);
+	glVertexAttribPointer(this->_texCoordLocation, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
+	std::cout << "uvVbo ID: " << _uvVbo << "\n";
 
 	// create VBO for color
 	glGenBuffers(1, &this->_colVbo);
@@ -104,10 +124,14 @@ void AwesomeWindow::BuildStuff()
 	glBufferData(GL_ARRAY_BUFFER, sizeof(colors), colors, GL_STATIC_DRAW);
 	glEnableVertexAttribArray(this->_colorLocation);
 	glVertexAttribPointer(this->_colorLocation, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+	std::cout << "colVbo ID: " << _colVbo << "\n";
 
 	// unbind vao and vbo
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
+
+	// texture!
+	_texture = MyTexture("D:\\Code\\imgui_opengl\\laughing_man.bmp");
 }
 
 void AwesomeWindow::ShowWindow()

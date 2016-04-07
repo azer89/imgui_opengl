@@ -10,7 +10,11 @@ class MyTexture
 {
 public:
 	MyTexture();
+	MyTexture(const char * file_path);
 	~MyTexture();
+
+private:
+	GLuint _textureID;
 
 private:
 	GLuint LoadBMP(const char * file_path);
