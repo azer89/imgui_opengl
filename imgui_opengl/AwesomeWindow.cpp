@@ -1,6 +1,8 @@
 
 #include "AwesomeWindow.h"
+
 #include <iostream>
+#include <vector>
 
 #include <imgui.h>
 
@@ -69,16 +71,23 @@ void AwesomeWindow::BuildStuff()
 
 	using namespace glm;
 
-	vec3 vertices[] = {
+	/*vec3 vertices[] = {
 		vec3(0.0,     0.0, 0.0),
 		vec3(0.0,   250.0, 0.0),
 		vec3(250.0, 250.0, 0.0),
 		vec3(0.0,     0.0, 0.0),
 		vec3(250.0, 250.0, 0.0),
 		vec3(250.0,   0.0, 0.0)
-	};
+	};*/
+	std::vector<vec3> vertices;
+	vertices.push_back(vec3(0.0, 0.0, 0.0));
+	vertices.push_back(vec3(0.0, 250.0, 0.0));
+	vertices.push_back(vec3(250.0, 250.0, 0.0));
+	vertices.push_back(vec3(0.0, 0.0, 0.0));
+	vertices.push_back(vec3(250.0, 250.0, 0.0));
+	vertices.push_back(vec3(250.0, 0.0, 0.0));
 
-	vec2 uv_coords[] =
+	/*vec2 uv_coords[] =
 	{
 		vec2(0, 1),
 		vec2(0, 0),
@@ -86,7 +95,14 @@ void AwesomeWindow::BuildStuff()
 		vec2(0, 1),
 		vec2(1, 0),
 		vec2(1, 1)
-	};
+	};*/
+	std::vector<vec2> uv_coords;
+	uv_coords.push_back(vec2(0, 1));
+	uv_coords.push_back(vec2(0, 0));
+	uv_coords.push_back(vec2(1, 0));
+	uv_coords.push_back(vec2(0, 1));
+	uv_coords.push_back(vec2(1, 0));
+	uv_coords.push_back(vec2(1, 1));
 
 	vec3 colors[] =
 	{
@@ -105,7 +121,7 @@ void AwesomeWindow::BuildStuff()
 	//  create a VBO for position and uv
 	glGenBuffers(1, &this->_vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, this->_vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vec3) * vertices.size(), &vertices[0], GL_STATIC_DRAW);
 	glEnableVertexAttribArray(this->_vertexLocation);
 	glVertexAttribPointer(this->_vertexLocation, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 	std::cout << "vbo ID: " << _vbo << "\n";
@@ -113,7 +129,7 @@ void AwesomeWindow::BuildStuff()
 	// create VBO for uv
 	glGenBuffers(1, &this->_uvVbo);
 	glBindBuffer(GL_ARRAY_BUFFER, this->_uvVbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(uv_coords), uv_coords, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vec2) * uv_coords.size(), &uv_coords[0], GL_STATIC_DRAW);
 	glEnableVertexAttribArray(this->_texCoordLocation);
 	glVertexAttribPointer(this->_texCoordLocation, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
 	std::cout << "uvVbo ID: " << _uvVbo << "\n";
