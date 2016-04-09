@@ -1,5 +1,8 @@
 
-
+/**
+* Reza Adhitya Saputra
+* reza.adhitya.saputra@gmail.com
+*/
 
 #ifndef MY_TEXTURE_H
 #define MY_TEXTURE_H

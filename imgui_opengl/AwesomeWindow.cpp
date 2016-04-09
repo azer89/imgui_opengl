@@ -14,11 +14,9 @@
 #include "MyShader.h"
 
 /**
- * This code is heavily inspired by the skeleton code given in CS488 Winter 2016 at U Waterloo
- *
- * Reza Adhitya Saputra
- * reza.adhitya.saputra@gmail.com
- */
+* Reza Adhitya Saputra
+* reza.adhitya.saputra@gmail.com
+*/
 
 std::shared_ptr<AwesomeWindow> AwesomeWindow::_static_instance = nullptr;
 
@@ -67,18 +65,8 @@ void AwesomeWindow::InitializeGL()
 
 void AwesomeWindow::BuildStuff()
 {
-	// http://www.opengl-tutorial.org/beginners-tutorials/tutorial-5-a-textured-cube/
-
 	using namespace glm;
 
-	/*vec3 vertices[] = {
-		vec3(0.0,     0.0, 0.0),
-		vec3(0.0,   250.0, 0.0),
-		vec3(250.0, 250.0, 0.0),
-		vec3(0.0,     0.0, 0.0),
-		vec3(250.0, 250.0, 0.0),
-		vec3(250.0,   0.0, 0.0)
-	};*/
 	std::vector<vec3> vertices;
 	vertices.push_back(vec3(0.0, 0.0, 0.0));
 	vertices.push_back(vec3(0.0, 250.0, 0.0));
@@ -87,15 +75,6 @@ void AwesomeWindow::BuildStuff()
 	vertices.push_back(vec3(250.0, 250.0, 0.0));
 	vertices.push_back(vec3(250.0, 0.0, 0.0));
 
-	/*vec2 uv_coords[] =
-	{
-		vec2(0, 1),
-		vec2(0, 0),
-		vec2(1, 0),
-		vec2(0, 1),
-		vec2(1, 0),
-		vec2(1, 1)
-	};*/
 	std::vector<vec2> uv_coords;
 	uv_coords.push_back(vec2(0, 1));
 	uv_coords.push_back(vec2(0, 0));
@@ -104,15 +83,14 @@ void AwesomeWindow::BuildStuff()
 	uv_coords.push_back(vec2(1, 0));
 	uv_coords.push_back(vec2(1, 1));
 
-	vec3 colors[] =
-	{
-		vec3(1.0, 0.0, 0.0),
-		vec3(0.0, 0.0, 1.0),
-		vec3(0.0, 1.0, 0.0),
-		vec3(1.0, 0.0, 0.0),
-		vec3(0.0, 1.0, 0.0),
-		vec3(0.0, 0.0, 1.0)
-	};
+	std::vector<vec3> colors;
+	colors.push_back(vec3(1.0, 0.0, 0.0));
+	colors.push_back(vec3(0.0, 0.0, 1.0));
+	colors.push_back(vec3(0.0, 1.0, 0.0));
+	colors.push_back(vec3(1.0, 0.0, 0.0));
+	colors.push_back(vec3(0.0, 1.0, 0.0));
+	colors.push_back(vec3(0.0, 0.0, 1.0));
+
 
 	// create VAO
 	glGenVertexArrays(1, &this->_vao);
@@ -137,7 +115,7 @@ void AwesomeWindow::BuildStuff()
 	// create VBO for color
 	glGenBuffers(1, &this->_colVbo);
 	glBindBuffer(GL_ARRAY_BUFFER, this->_colVbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(colors), colors, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vec3) * colors.size(), &colors[0], GL_STATIC_DRAW);
 	glEnableVertexAttribArray(this->_colorLocation);
 	glVertexAttribPointer(this->_colorLocation, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 	std::cout << "colVbo ID: " << _colVbo << "\n";
